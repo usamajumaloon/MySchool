@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySchool.WEB", "MySchool.WE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8601E79E-AA8E-4D61-BB32-4501D56E1A03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.DAL", "MySchool.DAL\MySchool.DAL.csproj", "{0E7548CC-8907-4C4C-B1BB-B4F582EDE791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySchool.DAL", "MySchool.DAL\MySchool.DAL.csproj", "{0E7548CC-8907-4C4C-B1BB-B4F582EDE791}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySchool.Services", "MySchool.Services\MySchool.Services.csproj", "{8414019F-B546-44B1-A274-7A463CCDFF9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{0E7548CC-8907-4C4C-B1BB-B4F582EDE791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E7548CC-8907-4C4C-B1BB-B4F582EDE791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E7548CC-8907-4C4C-B1BB-B4F582EDE791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8414019F-B546-44B1-A274-7A463CCDFF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8414019F-B546-44B1-A274-7A463CCDFF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8414019F-B546-44B1-A274-7A463CCDFF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8414019F-B546-44B1-A274-7A463CCDFF9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0E7548CC-8907-4C4C-B1BB-B4F582EDE791} = {8601E79E-AA8E-4D61-BB32-4501D56E1A03}
+		{8414019F-B546-44B1-A274-7A463CCDFF9F} = {8601E79E-AA8E-4D61-BB32-4501D56E1A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64E4D76A-04C8-4EB8-8F5E-14978B452ACF}

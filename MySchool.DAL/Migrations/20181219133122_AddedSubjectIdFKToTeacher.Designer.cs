@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySchool.DAL;
 
 namespace MySchool.DAL.Migrations
 {
     [DbContext(typeof(MySchoolDb))]
-    partial class MySchoolDbModelSnapshot : ModelSnapshot
+    [Migration("20181219133122_AddedSubjectIdFKToTeacher")]
+    partial class AddedSubjectIdFKToTeacher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace MySchool.DAL.Migrations
 
                     b.Property<string>("Gender");
 
-                    b.Property<int?>("GradeClassId");
+                    b.Property<int>("GradeClassId");
 
                     b.Property<string>("LastName");
 
@@ -163,7 +165,8 @@ namespace MySchool.DAL.Migrations
                 {
                     b.HasOne("MySchool.DAL.Entities.GradeClass", "GradeClasses")
                         .WithMany()
-                        .HasForeignKey("GradeClassId");
+                        .HasForeignKey("GradeClassId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MySchool.DAL.Entities.SubjectGrade", b =>

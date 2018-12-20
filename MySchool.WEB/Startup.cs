@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySchool.DAL;
+using MySchool.WEB.Common;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MySchool.WEB
@@ -23,8 +25,17 @@ namespace MySchool.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //Cors Origin
+            services.AddCors();
 
+            //Automapper
+            services.AddAutoMapper();
+
+            services.AddDbContext<MySchoolDb>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            ServiceInjector.InjectServices(services);
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -42,12 +53,14 @@ namespace MySchool.WEB
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddDbContext<MySchoolDb>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(builder =>
+                    builder.WithOrigins("*"));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,6 +82,7 @@ namespace MySchool.WEB
                     template: "{controller}/{action=Index}/{id?}");
             });
 
+            //Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -88,7 +102,7 @@ namespace MySchool.WEB
                 }
             });
 
-           
+
 
         }
     }

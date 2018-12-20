@@ -11,7 +11,7 @@ namespace MySchool.DAL.Repository
         internal MySchoolDb db;
         internal DbSet<TEntity> dbSet;
 
-        public GenericRepository(MySchoolDb db)
+        public GenericRepository(MySchoolDb db) 
         {
             this.db = db;
             this.dbSet = db.Set<TEntity>();

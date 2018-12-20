@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MySchool.DAL.Entities
+namespace MySchool.Services.Models.Students
 {
-    public class Student
+    public class StudentModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
         public DateTimeOffset DateOfBirth { get; set; }
-        public int? GradeClassId { get; set; }
-        public GradeClass GradeClasses { get; set; }
+        public int GradeClassId { get; set; }
     }
 }

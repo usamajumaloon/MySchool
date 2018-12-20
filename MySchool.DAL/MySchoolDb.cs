@@ -10,6 +10,13 @@ namespace MySchool.DAL
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string cn = "Server=DESKTOP-QQ3218V\\SQLEXPRESS;database=MySchool;Trusted_connection=true;pooling=true;MultipleActiveResultSets=True";
+            optionsBuilder.UseSqlServer(cn);
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Class> Classes { get; set; }
