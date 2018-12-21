@@ -5,17 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Classes\" />
-    <Folder Include="Models\Grades\" />
-    <Folder Include="Models\Subjects\" />
-    <Folder Include="Models\Teachers\" />
-    <Folder Include="Services\Grades\" />
-    <Folder Include="Services\Subjects\" />
-    <Folder Include="Services\Classes\" />
-    <Folder Include="Services\Teachers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
