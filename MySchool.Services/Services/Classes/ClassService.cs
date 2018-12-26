@@ -3,6 +3,7 @@ using MySchool.DAL.Entities;
 using MySchool.DAL.Repository;
 using MySchool.Services.Models.Classes;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Classes
 {
@@ -17,36 +18,36 @@ namespace MySchool.Services.Services.Classes
             this.mapper = mapper;
         }
 
-        public IEnumerable<ClassModel> GetClass()
+        public async Task<IEnumerable<ClassModel>> GetClassAsync()
         {
-            var entity = uow.ClassRepository.Get();
+            var entity = await uow.ClassRepository.Get();
             var model = mapper.Map<IEnumerable<ClassModel>>(entity);
             return model;
         }
 
-        public ClassModel GetClassById(int Id)
+        public async Task<ClassModel> GetClassByIdAsync(int Id)
         {
-            var entity = mapper.Map<ClassModel>(uow.ClassRepository.GetByID(Id));
+            var entity = mapper.Map<ClassModel>(await uow.ClassRepository.GetByIDAsync(Id));
             return entity;
         }
 
-        public void AddClass(ClassCreateModel input)
+        public async Task AddClassAsync(ClassCreateModel input)
         {
             var entity = mapper.Map<Class>(input);
-            uow.ClassRepository.Insert(entity);
+            await uow.ClassRepository.InsertAsync(entity);
             uow.Save();
         }
 
-        public void UpdateClass(ClassUpdateModel input)
+        public async Task UpdateClassAsync(ClassUpdateModel input)
         {
-            var entity = uow.ClassRepository.GetByID(input.Id);
+            var entity = await uow.ClassRepository.GetByIDAsync(input.Id);
             entity.Name = input.Name;
             uow.Save();
         }
 
-        public void DeleteClass(int Id)
+        public async Task DeleteClassAsync(int Id)
         {
-            uow.ClassRepository.Delete(Id);
+            await uow.ClassRepository.DeleteAsync(Id);
             uow.Save();
         }
     }

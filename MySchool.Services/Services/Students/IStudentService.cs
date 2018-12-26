@@ -1,14 +1,15 @@
 ﻿using MySchool.Services.Models.Students;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Students
 {
     public interface IStudentService
     {
-        IEnumerable<StudentModel> GetStudent();
-        StudentModel GetStudentById(int Id);
-        void AddStudent(StudentCreateModel input);
-        void UpdateStudent(StudentUpdateModel input);
-        void DeleteStudent(int Id);
+        Task<IEnumerable<StudentModel>> GetStudentAsync();
+        Task<StudentModel> GetStudentByIdAsync(int Id);
+        Task AddStudentAsync(StudentCreateModel input);
+        Task UpdateStudentAsync(StudentUpdateModel input);
+        Task DeleteStudentAsync(int Id);
     }
 }

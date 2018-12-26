@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Subjects
 {
     public interface ISubjectService
     {
-        IEnumerable<SubjectModel> GetSubject();
-        SubjectModel GetSubjectById(int Id);
-        void AddSubject(SubjectCreateModel input);
-        void UpdateSubject(SubjectUpdateModel input);
-        void DeleteSubject(int Id);
+        Task<IEnumerable<SubjectModel>> GetSubjectAsync();
+        Task<SubjectModel> GetSubjectByIdAsync(int Id);
+        Task AddSubjectAsync(SubjectCreateModel input);
+        Task UpdateSubjectAsync(SubjectUpdateModel input);
+        Task DeleteSubjectAsync(int Id);
     }
 }

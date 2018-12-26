@@ -2,6 +2,7 @@
 using MySchool.Services.Models.Teachers;
 using MySchool.Services.Services.Teachers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MySchool.WEB.Controllers.Teachers
 {
@@ -17,33 +18,33 @@ namespace MySchool.WEB.Controllers.Teachers
         }
 
         [HttpGet]
-        public IEnumerable<TeacherModel> Get()
+        public async Task<IEnumerable<TeacherModel>> GetAsync()
         {
-            return teacherService.GetTeacher();
+            return await teacherService.GetTeacherAsync();
         }
 
         [HttpGet, Route("{Id:int}")]
-        public TeacherModel Get(int Id)
+        public async Task<TeacherModel> GetAsync(int Id)
         {
-            return teacherService.GetTeacherById(Id);
+            return await teacherService.GetTeacherByIdAsync(Id);
         }
 
         [HttpPost]
-        public void Post(TeacherCreateModel value)
+        public async Task PostAsync(TeacherCreateModel value)
         {
-            teacherService.AddTeacher(value);
+            await teacherService.AddTeacherAsync(value);
         }
 
         [HttpPut]
-        public void Put(TeacherUpdateModel data)
+        public async Task PutAsync(TeacherUpdateModel data)
         {
-            teacherService.UpdateTeacher(data);
+            await teacherService.UpdateTeacherAsync(data);
         }
 
         [HttpDelete, Route("{Id:int}")]
-        public void Delete(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            teacherService.DeleteTeacher(Id);
+            await teacherService.DeleteTeacherAsync(Id);
         }
     }
 }

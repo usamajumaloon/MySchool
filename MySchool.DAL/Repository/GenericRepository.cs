@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace MySchool.DAL.Repository
 {
@@ -17,7 +18,7 @@ namespace MySchool.DAL.Repository
             this.dbSet = db.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public async virtual Task<IEnumerable<TEntity>> Get(
                 Expression<Func<TEntity, bool>> filter = null,
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                 string includeProperties = "")
@@ -37,26 +38,34 @@ namespace MySchool.DAL.Repository
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return await orderBy(query).ToListAsync();
             }
             else
             {
-                return query.ToList();
+                return await query.AsNoTracking().ToListAsync();
             }
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual async Task<TEntity> GetByIDAsync(object id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual async Task<TEntity> InsertAsync(TEntity entity)
         {
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
+            return entity;
         }
-        public virtual void Delete(object id)
+
+        //public virtual TEntity Inserrt(TEntity entity)
+        //{
+        //    //var neww = from x in UnitOfWork.
+        //    var t = dbSet.Add(entity);
+        //    return t.Entity;
+        //}
+        public virtual async Task DeleteAsync(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            TEntity entityToDelete = await dbSet.FindAsync(id);
             Delete(entityToDelete);
         }
 

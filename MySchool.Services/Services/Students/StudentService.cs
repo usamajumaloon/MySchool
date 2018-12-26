@@ -2,8 +2,9 @@
 using MySchool.DAL.Entities;
 using MySchool.DAL.Repository;
 using MySchool.Services.Models.Students;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Students
 {
@@ -18,29 +19,29 @@ namespace MySchool.Services.Services.Students
             this.mapper = mapper;
         }
 
-        public IEnumerable<StudentModel> GetStudent()
+        public async Task<IEnumerable<StudentModel>> GetStudentAsync()
         {
-            var entity = uow.StudentRepository.Get();
+            var entity = await uow.StudentRepository.Get();
             var model = mapper.Map<IEnumerable<StudentModel>>(entity);
             return model;
         }
 
-        public StudentModel GetStudentById(int Id)
+        public async Task<StudentModel> GetStudentByIdAsync(int Id)
         {
-            var entity = mapper.Map<StudentModel>(uow.StudentRepository.GetByID(Id));
+            var entity = mapper.Map<StudentModel>(await uow.StudentRepository.GetByIDAsync(Id));
             return entity;
         }
 
-        public void AddStudent(StudentCreateModel input)
+        public async Task AddStudentAsync(StudentCreateModel input)
         {
             var entity = mapper.Map<Student>(input);
-            uow.StudentRepository.Insert(entity);
+            await uow.StudentRepository.InsertAsync(entity);
             uow.Save();
         }
         
-        public void UpdateStudent(StudentUpdateModel input)
+        public async Task UpdateStudentAsync(StudentUpdateModel input)
         {
-            var entity = uow.StudentRepository.GetByID(input.Id);
+            var entity = await uow.StudentRepository.GetByIDAsync(input.Id);
             entity.FirstName = input.FirstName;
             entity.LastName = input.LastName;
             entity.Gender = input.Gender;
@@ -49,9 +50,9 @@ namespace MySchool.Services.Services.Students
             uow.Save();
         }
 
-        public void DeleteStudent(int Id)
+        public async Task DeleteStudentAsync(int Id)
         {
-            uow.StudentRepository.Delete(Id);
+            await uow.StudentRepository.DeleteAsync(Id);
             uow.Save();
         }
     }

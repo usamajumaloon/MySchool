@@ -1,14 +1,15 @@
 ﻿using MySchool.Services.Models.Grades;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Grades
 {
     public interface IGradeService
     {
-        IEnumerable<GradeModel> GetGrade();
-        GradeModel GetGradeById(int Id);
-        void AddGrade(GradeCreateModel input);
-        void UpdateGrade(GradeUpdateModel input);
-        void DeleteGrade(int Id);
+        Task<IEnumerable<GradeModel>> GetGradeAsync();
+        Task<GradeModel> GetGradeByIdAsync(int Id);
+        Task AddGradeAsync(GradeCreateModel input);
+        Task UpdateGradeAsync(GradeUpdateModel input);
+        Task DeleteGradeAsync(int Id);
     }
 }

@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Classes
 {
     public interface IClassService
     {
-        IEnumerable<ClassModel> GetClass();
-        ClassModel GetClassById(int Id);
-        void AddClass(ClassCreateModel input);
-        void UpdateClass(ClassUpdateModel input);
-        void DeleteClass(int Id);
+        Task<IEnumerable<ClassModel>> GetClassAsync();
+        Task<ClassModel> GetClassByIdAsync(int Id);
+        Task AddClassAsync(ClassCreateModel input);
+        Task UpdateClassAsync(ClassUpdateModel input);
+        Task DeleteClassAsync(int Id);
     }
 }

@@ -5,6 +5,7 @@ using MySchool.Services.Models.Grades;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Grades
 {
@@ -19,36 +20,36 @@ namespace MySchool.Services.Services.Grades
             this.mapper = mapper;
         }
 
-        public IEnumerable<GradeModel> GetGrade()
+        public async Task<IEnumerable<GradeModel>> GetGradeAsync()
         {
-            var entity = uow.GradeRepository.Get();
+            var entity = await uow.GradeRepository.Get();
             var model = mapper.Map<IEnumerable<GradeModel>>(entity);
             return model;
         }
 
-        public GradeModel GetGradeById(int Id)
+        public async Task<GradeModel> GetGradeByIdAsync(int Id)
         {
-            var entity = mapper.Map<GradeModel>(uow.GradeRepository.GetByID(Id));
+            var entity = mapper.Map<GradeModel>(await uow.GradeRepository.GetByIDAsync(Id));
             return entity;
         }
 
-        public void AddGrade(GradeCreateModel input)
+        public async Task AddGradeAsync(GradeCreateModel input)
         {
             var entity = mapper.Map<Grade>(input);
-            uow.GradeRepository.Insert(entity);
+            await uow.GradeRepository.InsertAsync(entity);
             uow.Save();
         }
 
-        public void UpdateGrade(GradeUpdateModel input)
+        public async Task UpdateGradeAsync(GradeUpdateModel input)
         {
-            var entity = uow.GradeRepository.GetByID(input.Id);
+            var entity = await uow.GradeRepository.GetByIDAsync(input.Id);
             entity.Name = input.Name;
             uow.Save();
         }
 
-        public void DeleteGrade(int Id)
+        public async Task DeleteGradeAsync(int Id)
         {
-            uow.GradeRepository.Delete(Id);
+            await uow.GradeRepository.DeleteAsync(Id);
             uow.Save();
         }
     }

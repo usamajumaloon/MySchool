@@ -5,6 +5,7 @@ using MySchool.Services.Models.Teachers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Teachers
 {
@@ -19,29 +20,29 @@ namespace MySchool.Services.Services.Teachers
             this.mapper = mapper;
         }
 
-        public IEnumerable<TeacherModel> GetTeacher()
+        public async Task<IEnumerable<TeacherModel>> GetTeacherAsync()
         {
-            var entity = uow.TeacherRepository.Get();
+            var entity = await uow.TeacherRepository.Get();
             var model = mapper.Map<IEnumerable<TeacherModel>>(entity);
             return model;
         }
 
-        public TeacherModel GetTeacherById(int Id)
+        public async Task<TeacherModel> GetTeacherByIdAsync(int Id)
         {
-            var entity = mapper.Map<TeacherModel>(uow.TeacherRepository.GetByID(Id));
+            var entity = mapper.Map<TeacherModel>(await uow.TeacherRepository.GetByIDAsync(Id));
             return entity;
         }
 
-        public void AddTeacher(TeacherCreateModel input)
+        public async Task AddTeacherAsync(TeacherCreateModel input)
         {
             var entity = mapper.Map<Teacher>(input);
-            uow.TeacherRepository.Insert(entity);
+            await uow.TeacherRepository.InsertAsync(entity);
             uow.Save();
         }
 
-        public void UpdateTeacher(TeacherUpdateModel input)
+        public async Task UpdateTeacherAsync(TeacherUpdateModel input)
         {
-            var entity = uow.TeacherRepository.GetByID(input.Id);
+            var entity = await uow.TeacherRepository.GetByIDAsync(input.Id);
             entity.FirstName = input.FirstName;
             entity.LastName = input.LastName;
             entity.Gender = input.Gender;
@@ -51,9 +52,9 @@ namespace MySchool.Services.Services.Teachers
             uow.Save();
         }
 
-        public void DeleteTeacher(int Id)
+        public async Task DeleteTeacherAsync(int Id)
         {
-            uow.TeacherRepository.Delete(Id);
+            await uow.TeacherRepository.DeleteAsync(Id);
             uow.Save();
         }
     }

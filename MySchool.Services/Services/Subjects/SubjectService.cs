@@ -3,6 +3,7 @@ using MySchool.DAL.Entities;
 using MySchool.DAL.Repository;
 using MySchool.Services.Models.Subjects;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Subjects
 {
@@ -17,36 +18,36 @@ namespace MySchool.Services.Services.Subjects
             this.mapper = mapper;
         }
 
-        public IEnumerable<SubjectModel> GetSubject()
+        public async Task<IEnumerable<SubjectModel>> GetSubjectAsync()
         {
-            var entity = uow.SubjectRepository.Get();
+            var entity = await uow.SubjectRepository.Get();
             var model = mapper.Map<IEnumerable<SubjectModel>>(entity);
             return model;
         }
 
-        public SubjectModel GetSubjectById(int Id)
+        public async Task<SubjectModel> GetSubjectByIdAsync(int Id)
         {
-            var entity = mapper.Map<SubjectModel>(uow.SubjectRepository.GetByID(Id));
+            var entity = mapper.Map<SubjectModel>(await uow.SubjectRepository.GetByIDAsync(Id));
             return entity;
         }
 
-        public void AddSubject(SubjectCreateModel input)
+        public async Task AddSubjectAsync(SubjectCreateModel input)
         {
             var entity = mapper.Map<Subject>(input);
-            uow.SubjectRepository.Insert(entity);
+            await uow.SubjectRepository.InsertAsync(entity);
             uow.Save();
         }
 
-        public void UpdateSubject(SubjectUpdateModel input)
+        public async Task UpdateSubjectAsync(SubjectUpdateModel input)
         {
-            var entity = uow.SubjectRepository.GetByID(input.Id);
+            var entity = await uow.SubjectRepository.GetByIDAsync(input.Id);
             entity.Name = input.Name;
             uow.Save();
         }
 
-        public void DeleteSubject(int Id)
+        public async Task DeleteSubjectAsync(int Id)
         {
-            uow.SubjectRepository.Delete(Id);
+            await uow.SubjectRepository.DeleteAsync(Id);
             uow.Save();
         }
     }
