@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using MySchool.Common.Utility;
+using MySchool.DAL;
 using MySchool.DAL.Entities;
 using MySchool.DAL.Repository;
+using MySchool.DAL.Repository.StudentRepository;
 using MySchool.Services.Models.Students;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,50 +12,45 @@ namespace MySchool.Services.Services.Students
 {
     public class StudentService: IStudentService
     {
-        private UnitOfWork uow;
-        private readonly IMapper mapper;
+        private readonly IStudentRepository repository;
 
-        public StudentService(UnitOfWork uow, IMapper mapper)
+        public StudentService(IStudentRepository repository)
         {
-            this.uow = uow;
-            this.mapper = mapper;
+            this.repository = repository;
         }
 
         public async Task<IEnumerable<StudentModel>> GetStudentAsync()
         {
-            var entity = await uow.StudentRepository.Get();
-            var model = mapper.Map<IEnumerable<StudentModel>>(entity);
+            var entity = await repository.GetAllStudents();
+            var model = entity.MapObjectList<Student, StudentModel>();
             return model;
         }
 
         public async Task<StudentModel> GetStudentByIdAsync(int Id)
         {
-            var entity = mapper.Map<StudentModel>(await uow.StudentRepository.GetByIDAsync(Id));
-            return entity;
+            var entity = await repository.GetStudentById(Id);
+            var model = entity.MapObject<Student, StudentModel>();
+            return model;
         }
 
         public async Task AddStudentAsync(StudentCreateModel input)
         {
-            var entity = mapper.Map<Student>(input);
-            await uow.StudentRepository.InsertAsync(entity);
-            uow.Save();
+            var entity = input.MapObject<StudentCreateModel, Student>();
+            await repository.AddStudent(entity);
+            repository.Save();
         }
         
-        public async Task UpdateStudentAsync(StudentUpdateModel input)
+        public void UpdateStudentAsync(StudentUpdateModel input)
         {
-            var entity = await uow.StudentRepository.GetByIDAsync(input.Id);
-            entity.FirstName = input.FirstName;
-            entity.LastName = input.LastName;
-            entity.Gender = input.Gender;
-            entity.DateOfBirth = input.DateOfBirth;
-            entity.GradeClassId = input.GradeClassId;
-            uow.Save();
+            var entity = input.MapObject<StudentUpdateModel, Student>();
+            repository.UpdateStudent(entity);
+            repository.Save();
         }
 
         public async Task DeleteStudentAsync(int Id)
         {
-            await uow.StudentRepository.DeleteAsync(Id);
-            uow.Save();
+            await repository.DeleteStudent(Id);
+            repository.Save();
         }
     }
 }

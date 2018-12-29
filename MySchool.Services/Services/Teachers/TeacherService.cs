@@ -1,61 +1,53 @@
-﻿using AutoMapper;
+﻿using MySchool.Common.Utility;
 using MySchool.DAL.Entities;
-using MySchool.DAL.Repository;
+using MySchool.DAL.Repository.TeacherRepository;
 using MySchool.Services.Models.Teachers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Teachers
 {
     public class TeacherService: ITeacherService
     {
-        private UnitOfWork uow;
-        private readonly IMapper mapper;
+        private readonly ITeacherRepository repository;
 
-        public TeacherService(UnitOfWork uow, IMapper mapper)
+        public TeacherService(ITeacherRepository repository)
         {
-            this.uow = uow;
-            this.mapper = mapper;
+            this.repository = repository;
         }
 
         public async Task<IEnumerable<TeacherModel>> GetTeacherAsync()
         {
-            var entity = await uow.TeacherRepository.Get();
-            var model = mapper.Map<IEnumerable<TeacherModel>>(entity);
+            var entity = await repository.GetAllTeachers();
+            var model = entity.MapObjectList<Teacher, TeacherModel>();
             return model;
         }
 
         public async Task<TeacherModel> GetTeacherByIdAsync(int Id)
         {
-            var entity = mapper.Map<TeacherModel>(await uow.TeacherRepository.GetByIDAsync(Id));
+            var result = await repository.GetTeacherById(Id);
+            var entity = result.MapObject<Teacher, TeacherModel>();
             return entity;
         }
 
         public async Task AddTeacherAsync(TeacherCreateModel input)
         {
-            var entity = mapper.Map<Teacher>(input);
-            await uow.TeacherRepository.InsertAsync(entity);
-            uow.Save();
+            var entity = input.MapObject<TeacherCreateModel, Teacher>();
+            await repository.AddTeacher(entity);
+            repository.Save();
         }
 
-        public async Task UpdateTeacherAsync(TeacherUpdateModel input)
+        public void UpdateTeacherAsync(TeacherUpdateModel input)
         {
-            var entity = await uow.TeacherRepository.GetByIDAsync(input.Id);
-            entity.FirstName = input.FirstName;
-            entity.LastName = input.LastName;
-            entity.Gender = input.Gender;
-            entity.DateOfBirth = input.DateOfBirth;
-            entity.GradeClassId = input.GradeClassId;
-            entity.SubjectId = input.SubjectId;
-            uow.Save();
+            var entity = input.MapObject<TeacherUpdateModel, Teacher>();
+            repository.UpdateTeacher(entity);
+            repository.Save();
         }
 
         public async Task DeleteTeacherAsync(int Id)
         {
-            await uow.TeacherRepository.DeleteAsync(Id);
-            uow.Save();
+            await repository.DeleteTeacher(Id);
+            repository.Save();
         }
     }
 }

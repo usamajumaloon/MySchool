@@ -25,17 +25,21 @@ namespace MySchool.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             //Cors Origin
             services.AddCors();
 
             //Automapper
             services.AddAutoMapper();
 
-            services.AddDbContext<MySchoolDb>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //Adding Connection String
+            var conn = Configuration.GetConnectionString("Default");
+            services.AddDbContext<MySchoolDb>(options => options.UseSqlServer(conn));
 
-            ServiceInjector.InjectServices(services);
+            InterfaceInjector.InjectServices(services);
+            InterfaceInjector.InjectRepositories(services);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -70,6 +74,10 @@ namespace MySchool.WEB
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            Mapper.Initialize(c=> {
+                c.AddProfile<MappingProfile>();
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

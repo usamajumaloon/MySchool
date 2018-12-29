@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MySchool.Common.Utility;
 using MySchool.DAL.Entities;
 using MySchool.DAL.Repository;
+using MySchool.DAL.Repository.GradeRepository;
 using MySchool.Services.Models.Grades;
 using System;
 using System.Collections.Generic;
@@ -11,46 +13,45 @@ namespace MySchool.Services.Services.Grades
 {
     public class GradeService: IGradeService
     {
-        private UnitOfWork uow;
-        private readonly IMapper mapper;
+        private readonly IGradeRepository repository;
 
-        public GradeService(UnitOfWork uow, IMapper mapper)
+        public GradeService(IGradeRepository repository)
         {
-            this.uow = uow;
-            this.mapper = mapper;
+            this.repository = repository;
         }
 
         public async Task<IEnumerable<GradeModel>> GetGradeAsync()
         {
-            var entity = await uow.GradeRepository.Get();
-            var model = mapper.Map<IEnumerable<GradeModel>>(entity);
+            var entity = await repository.GetAllGrades();
+            var model = entity.MapObjectList<Grade, GradeModel>();
             return model;
         }
 
         public async Task<GradeModel> GetGradeByIdAsync(int Id)
         {
-            var entity = mapper.Map<GradeModel>(await uow.GradeRepository.GetByIDAsync(Id));
+            var result = await repository.GetGradeById(Id);
+            var entity = result.MapObject<Grade, GradeModel>();
             return entity;
         }
 
         public async Task AddGradeAsync(GradeCreateModel input)
         {
-            var entity = mapper.Map<Grade>(input);
-            await uow.GradeRepository.InsertAsync(entity);
-            uow.Save();
+            var entity = input.MapObject<GradeCreateModel, Grade>();
+            await repository.AddGrade(entity);
+            repository.Save();
         }
 
-        public async Task UpdateGradeAsync(GradeUpdateModel input)
+        public void UpdateGradeAsync(GradeUpdateModel input)
         {
-            var entity = await uow.GradeRepository.GetByIDAsync(input.Id);
-            entity.Name = input.Name;
-            uow.Save();
+            var entity = input.MapObject<GradeUpdateModel, Grade>();
+            repository.UpdateGrade(entity);
+            repository.Save();
         }
 
         public async Task DeleteGradeAsync(int Id)
         {
-            await uow.GradeRepository.DeleteAsync(Id);
-            uow.Save();
+            await repository.DeleteGrade(Id);
+            repository.Save();
         }
     }
 }

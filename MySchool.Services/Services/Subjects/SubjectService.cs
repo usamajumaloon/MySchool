@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using MySchool.Common.Utility;
 using MySchool.DAL.Entities;
-using MySchool.DAL.Repository;
+using MySchool.DAL.Repository.SubjectRepository;
 using MySchool.Services.Models.Subjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,46 +9,45 @@ namespace MySchool.Services.Services.Subjects
 {
     public class SubjectService : ISubjectService
     {
-        private UnitOfWork uow;
-        private readonly IMapper mapper;
+        private readonly ISubjectRepository repository;
 
-        public SubjectService(UnitOfWork uow, IMapper mapper)
+        public SubjectService(ISubjectRepository repository)
         {
-            this.uow = uow;
-            this.mapper = mapper;
+            this.repository = repository;
         }
 
         public async Task<IEnumerable<SubjectModel>> GetSubjectAsync()
         {
-            var entity = await uow.SubjectRepository.Get();
-            var model = mapper.Map<IEnumerable<SubjectModel>>(entity);
+            var entity = await repository.GetAllSubjects();
+            var model = entity.MapObjectList<Subject, SubjectModel>();
             return model;
         }
 
         public async Task<SubjectModel> GetSubjectByIdAsync(int Id)
         {
-            var entity = mapper.Map<SubjectModel>(await uow.SubjectRepository.GetByIDAsync(Id));
+            var result = await repository.GetSubjectById(Id);
+            var entity = result.MapObject<Subject, SubjectModel>();
             return entity;
         }
 
         public async Task AddSubjectAsync(SubjectCreateModel input)
         {
-            var entity = mapper.Map<Subject>(input);
-            await uow.SubjectRepository.InsertAsync(entity);
-            uow.Save();
+            var entity = input.MapObject<SubjectCreateModel, Subject>();
+            await repository.AddSubject(entity);
+            repository.Save();
         }
 
-        public async Task UpdateSubjectAsync(SubjectUpdateModel input)
+        public void UpdateSubjectAsync(SubjectUpdateModel input)
         {
-            var entity = await uow.SubjectRepository.GetByIDAsync(input.Id);
-            entity.Name = input.Name;
-            uow.Save();
+            var entity = input.MapObject<SubjectUpdateModel, Subject>();
+            repository.UpdateSubject(entity);
+            repository.Save();
         }
 
         public async Task DeleteSubjectAsync(int Id)
         {
-            await uow.SubjectRepository.DeleteAsync(Id);
-            uow.Save();
+            await repository.DeleteSubject(Id);
+            repository.Save();
         }
     }
 }

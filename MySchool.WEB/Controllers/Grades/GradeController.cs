@@ -39,9 +39,9 @@ namespace MySchool.WEB.Controllers.Grades
         }
 
         [HttpPut]
-        public async Task PutAsync(GradeUpdateModel data)
+        public void PutAsync(GradeUpdateModel data)
         {
-            await gradeService.UpdateGradeAsync(data);
+            gradeService.UpdateGradeAsync(data);
         }
 
         [HttpDelete, Route("{Id:int}")]

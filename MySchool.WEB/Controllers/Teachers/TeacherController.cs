@@ -36,9 +36,9 @@ namespace MySchool.WEB.Controllers.Teachers
         }
 
         [HttpPut]
-        public async Task PutAsync(TeacherUpdateModel data)
+        public void PutAsync(TeacherUpdateModel data)
         {
-            await teacherService.UpdateTeacherAsync(data);
+            teacherService.UpdateTeacherAsync(data);
         }
 
         [HttpDelete, Route("{Id:int}")]

@@ -9,7 +9,7 @@ namespace MySchool.Services.Services.Grades
         Task<IEnumerable<GradeModel>> GetGradeAsync();
         Task<GradeModel> GetGradeByIdAsync(int Id);
         Task AddGradeAsync(GradeCreateModel input);
-        Task UpdateGradeAsync(GradeUpdateModel input);
+        void UpdateGradeAsync(GradeUpdateModel input);
         Task DeleteGradeAsync(int Id);
     }
 }
