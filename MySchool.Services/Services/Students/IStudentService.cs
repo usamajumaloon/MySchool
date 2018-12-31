@@ -8,7 +8,7 @@ namespace MySchool.Services.Services.Students
     {
         Task<IEnumerable<StudentModel>> GetStudentAsync();
         Task<StudentModel> GetStudentByIdAsync(int Id);
-        Task AddStudentAsync(StudentCreateModel input);
+        Task<StudentCreateModel> AddStudentAsync(StudentCreateModel input);
         void UpdateStudentAsync(StudentUpdateModel input);
         Task DeleteStudentAsync(int Id);
     }

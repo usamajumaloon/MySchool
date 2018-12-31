@@ -1,16 +1,13 @@
 ﻿using MySchool.Common.Utility;
-using MySchool.DAL;
 using MySchool.DAL.Entities;
-using MySchool.DAL.Repository;
 using MySchool.DAL.Repository.StudentRepository;
 using MySchool.Services.Models.Students;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MySchool.Services.Services.Students
 {
-    public class StudentService: IStudentService
+    public class StudentService : IStudentService
     {
         private readonly IStudentRepository repository;
 
@@ -33,13 +30,14 @@ namespace MySchool.Services.Services.Students
             return model;
         }
 
-        public async Task AddStudentAsync(StudentCreateModel input)
+        public async Task<StudentCreateModel> AddStudentAsync(StudentCreateModel input)
         {
             var entity = input.MapObject<StudentCreateModel, Student>();
             await repository.AddStudent(entity);
             repository.Save();
+            return input;
         }
-        
+
         public void UpdateStudentAsync(StudentUpdateModel input)
         {
             var entity = input.MapObject<StudentUpdateModel, Student>();

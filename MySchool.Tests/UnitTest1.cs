@@ -8,7 +8,6 @@ namespace MySchool.Tests
 {
     public class UnitTest1: MySchoolTestBase
     {
-        [Fact]
         public async Task GetAllStudentsAsync()
         {
             var query = new StudentService(new StudentRepository(context));

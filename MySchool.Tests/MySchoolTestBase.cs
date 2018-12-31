@@ -19,6 +19,7 @@ namespace MySchool.Tests
             context = new MySchoolDb(options);
             context.Database.EnsureCreated();
             Seed();
+            Mapper.Reset();
             Mapper.Initialize(c =>
             {
                 c.AddProfile<MappingProfile>();

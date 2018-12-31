@@ -30,9 +30,9 @@ namespace MySchool.WEB.Controllers.Students
         }
 
         [HttpPost]
-        public async Task PostAsync(StudentCreateModel value)
+        public async Task<StudentCreateModel> PostAsync(StudentCreateModel value)
         {
-            await studentService.AddStudentAsync(value);
+            return await studentService.AddStudentAsync(value);
         }
 
         [HttpPut]
