@@ -30,17 +30,18 @@ namespace MySchool.Services.Services.Subjects
             return entity;
         }
 
-        public async Task AddSubjectAsync(SubjectCreateModel input)
+        public async Task<SubjectCreateModel> AddSubjectAsync(SubjectCreateModel input)
         {
             var entity = input.MapObject<SubjectCreateModel, Subject>();
             await repository.AddSubject(entity);
             repository.Save();
+            return input;
         }
 
-        public void UpdateSubjectAsync(SubjectUpdateModel input)
+        public async Task UpdateSubjectAsync(SubjectUpdateModel input)
         {
             var entity = input.MapObject<SubjectUpdateModel, Subject>();
-            repository.UpdateSubject(entity);
+            await repository.UpdateSubject(entity);
             repository.Save();
         }
 

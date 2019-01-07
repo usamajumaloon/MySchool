@@ -34,17 +34,18 @@ namespace MySchool.Services.Services.Grades
             return entity;
         }
 
-        public async Task AddGradeAsync(GradeCreateModel input)
+        public async Task<GradeCreateModel> AddGradeAsync(GradeCreateModel input)
         {
             var entity = input.MapObject<GradeCreateModel, Grade>();
             await repository.AddGrade(entity);
             repository.Save();
+            return input;
         }
 
-        public void UpdateGradeAsync(GradeUpdateModel input)
+        public async Task UpdateGradeAsync(GradeUpdateModel input)
         {
             var entity = input.MapObject<GradeUpdateModel, Grade>();
-            repository.UpdateGrade(entity);
+            await repository.UpdateGrade(entity);
             repository.Save();
         }
 

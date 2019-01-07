@@ -17,13 +17,13 @@ namespace MySchool.DAL.Repository.ClassRepository
 
         public async Task<IEnumerable<Class>> GetAllClasses()
         {
-            return await context.Classes.ToListAsync();
+            return await context.Classes.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         public async Task<Class> GetClassById(int Id)
         {
             return await context.Classes
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && !p.IsDeleted)
                 .FirstOrDefaultAsync();
         }
 
@@ -35,23 +35,15 @@ namespace MySchool.DAL.Repository.ClassRepository
 
         public async Task DeleteClass(int Id)
         {
-            Class entityToDelete = await GetClassById(Id);
-            Delete(entityToDelete);
+            var output = await GetClassById(Id);
+            output.IsDeleted = true;
         }
 
-        public void Delete(Class entityToDelete)
+        public async Task UpdateClass(Class entity)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                context.Attach(entityToDelete);
-            }
-            context.Remove(entityToDelete);
-        }
-
-        public void UpdateClass(Class entity)
-        {
-            context.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
+            //context.Entry(entity).State = EntityState.Modified;
+            var result = await GetClassById(entity.Id);
+            result.Name = entity.Name;
         }
 
         public void Save()

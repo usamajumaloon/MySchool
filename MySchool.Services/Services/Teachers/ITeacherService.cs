@@ -10,8 +10,8 @@ namespace MySchool.Services.Services.Teachers
     {
         Task<IEnumerable<TeacherModel>> GetTeacherAsync();
         Task<TeacherModel> GetTeacherByIdAsync(int Id);
-        Task AddTeacherAsync(TeacherCreateModel input);
-        void UpdateTeacherAsync(TeacherUpdateModel input);
+        Task<TeacherCreateModel> AddTeacherAsync(TeacherCreateModel input);
+        Task UpdateTeacherAsync(TeacherUpdateModel input);
         Task DeleteTeacherAsync(int Id);
     }
 }

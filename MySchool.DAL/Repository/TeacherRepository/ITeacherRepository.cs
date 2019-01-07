@@ -12,7 +12,7 @@ namespace MySchool.DAL.Repository.TeacherRepository
         Task<Teacher> GetTeacherById(int Id);
         Task<Teacher> AddTeacher(Teacher entity);
         Task DeleteTeacher(int Id);
-        void UpdateTeacher(Teacher entity);
+        Task UpdateTeacher(Teacher entity);
         void Save();
     }
 }

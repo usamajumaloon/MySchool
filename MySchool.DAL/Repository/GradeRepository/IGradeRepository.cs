@@ -12,7 +12,7 @@ namespace MySchool.DAL.Repository.GradeRepository
         Task<Grade> GetGradeById(int Id);
         Task<Grade> AddGrade(Grade entity);
         Task DeleteGrade(int Id);
-        void UpdateGrade(Grade entity);
+        Task UpdateGrade(Grade entity);
         void Save();
     }
 }

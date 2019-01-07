@@ -12,7 +12,7 @@ namespace MySchool.DAL.Repository.SubjectRepository
         Task<Subject> GetSubjectById(int Id);
         Task<Subject> AddSubject(Subject entity);
         Task DeleteSubject(int Id);
-        void UpdateSubject(Subject entity);
+        Task UpdateSubject(Subject entity);
         void Save();
     }
 }

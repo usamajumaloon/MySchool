@@ -10,8 +10,8 @@ namespace MySchool.Services.Services.Classes
     {
         Task<IEnumerable<ClassModel>> GetClassAsync();
         Task<ClassModel> GetClassByIdAsync(int Id);
-        Task AddClassAsync(ClassCreateModel input);
-        void UpdateClassAsync(ClassUpdateModel input);
+        Task<ClassCreateModel> AddClassAsync(ClassCreateModel input);
+        Task UpdateClassAsync(ClassUpdateModel input);
         Task DeleteClassAsync(int Id);
     }
 }

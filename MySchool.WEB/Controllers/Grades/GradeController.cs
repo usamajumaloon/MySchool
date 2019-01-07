@@ -33,9 +33,9 @@ namespace MySchool.WEB.Controllers.Grades
         }
 
         [HttpPost]
-        public async Task PostAsync(GradeCreateModel value)
+        public async Task<GradeCreateModel> PostAsync(GradeCreateModel value)
         {
-            await gradeService.AddGradeAsync(value);
+            return await gradeService.AddGradeAsync(value);
         }
 
         [HttpPut]

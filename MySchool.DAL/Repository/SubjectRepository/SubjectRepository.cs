@@ -17,13 +17,13 @@ namespace MySchool.DAL.Repository.SubjectRepository
 
         public async Task<IEnumerable<Subject>> GetAllSubjects()
         {
-            return await context.Subjects.ToListAsync();
+            return await context.Subjects.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         public async Task<Subject> GetSubjectById(int Id)
         {
             return await context.Subjects
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && !p.IsDeleted)
                 .FirstOrDefaultAsync();
         }
 
@@ -35,23 +35,14 @@ namespace MySchool.DAL.Repository.SubjectRepository
 
         public async Task DeleteSubject(int Id)
         {
-            Subject entityToDelete = await GetSubjectById(Id);
-            Delete(entityToDelete);
+            var output = await GetSubjectById(Id);
+            output.IsDeleted = true;
         }
 
-        public void Delete(Subject entityToDelete)
+        public async Task UpdateSubject(Subject entity)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                context.Attach(entityToDelete);
-            }
-            context.Remove(entityToDelete);
-        }
-
-        public void UpdateSubject(Subject entity)
-        {
-            context.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
+            var result = await GetSubjectById(entity.Id);
+            result.Name = entity.Name;
         }
 
         public void Save()

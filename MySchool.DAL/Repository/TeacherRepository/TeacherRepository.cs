@@ -17,13 +17,13 @@ namespace MySchool.DAL.Repository.TeacherRepository
 
         public async Task<IEnumerable<Teacher>> GetAllTeachers()
         {
-            return await context.Teachers.ToListAsync();
+            return await context.Teachers.Where(p=>!p.IsDeleted).ToListAsync();
         }
 
         public async Task<Teacher> GetTeacherById(int Id)
         {
             return await context.Teachers
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && !p.IsDeleted)
                 .FirstOrDefaultAsync();
         }
 
@@ -35,23 +35,20 @@ namespace MySchool.DAL.Repository.TeacherRepository
 
         public async Task DeleteTeacher(int Id)
         {
-            Teacher entityToDelete = await GetTeacherById(Id);
-            Delete(entityToDelete);
+            var output = await GetTeacherById(Id);
+            output.IsDeleted = true;
         }
 
-        public void Delete(Teacher entityToDelete)
+        public async Task UpdateTeacher(Teacher entity)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                context.Attach(entityToDelete);
-            }
-            context.Remove(entityToDelete);
-        }
-
-        public void UpdateTeacher(Teacher entity)
-        {
-            context.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
+            var result = await GetTeacherById(entity.Id);
+            result.FirstName = entity.FirstName;
+            result.LastName = entity.LastName;
+            result.DateOfBirth = entity.DateOfBirth;
+            result.Gender = entity.Gender;
+            result.GradeClassId = entity.GradeClassId;
+            result.SubjectId = entity.SubjectId;
+            context.Entry(result).State = EntityState.Modified;
         }
 
         public void Save()

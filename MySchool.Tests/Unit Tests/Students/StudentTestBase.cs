@@ -5,13 +5,13 @@ using MySchool.DAL.Entities;
 using MySchool.WEB.Common;
 using System;
 
-namespace MySchool.Tests
+namespace MySchool.Tests.Unit_Tests.Students
 {
-    public class MySchoolTestBase: IDisposable
+    public class StudentTestBase
     {
         protected readonly MySchoolDb context;
 
-        public MySchoolTestBase()
+        public StudentTestBase()
         {
             var options = new DbContextOptionsBuilder<MySchoolDb>()
                               .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -26,7 +26,7 @@ namespace MySchool.Tests
             });
             context.SaveChanges();
         }
-        
+
         public void Dispose()
         {
             context.Database.EnsureDeleted();
@@ -45,7 +45,7 @@ namespace MySchool.Tests
             context.Classes.Add(new Class { Id = 2, Name = "B" });
 
             //GradeClasses
-            context.GradeClasses.Add(new GradeClass { Id = 1, GradeId = 1, ClassId = 2});
+            context.GradeClasses.Add(new GradeClass { Id = 1, GradeId = 1, ClassId = 2 });
 
             //Students
             context.Students.Add(new Student { Id = 1, FirstName = "Usama", LastName = "Jumaloon", Gender = "Male", DateOfBirth = new DateTime(1995, 11, 25), GradeClassId = 1 });

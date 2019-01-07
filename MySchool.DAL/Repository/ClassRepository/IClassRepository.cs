@@ -12,7 +12,7 @@ namespace MySchool.DAL.Repository.ClassRepository
         Task<Class> GetClassById(int Id);
         Task<Class> AddClass(Class entity);
         Task DeleteClass(int Id);
-        void UpdateClass(Class entity);
+        Task UpdateClass(Class entity);
         void Save();
     }
 }

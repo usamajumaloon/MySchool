@@ -12,7 +12,7 @@ namespace MySchool.DAL.Repository.StudentRepository
         Task<Student> GetStudentById(int Id);
         Task<Student> AddStudent(Student entity);
         Task DeleteStudent(int Id);
-        void UpdateStudent(Student entity);
+        Task UpdateStudent(Student entity);
         void Save();
     }
 }

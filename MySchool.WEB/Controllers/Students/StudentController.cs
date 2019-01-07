@@ -36,9 +36,9 @@ namespace MySchool.WEB.Controllers.Students
         }
 
         [HttpPut]
-        public void PutAsync(StudentUpdateModel data)
+        public async Task<StudentUpdateModel> PutAsync(StudentUpdateModel data)
         {
-            studentService.UpdateStudentAsync(data);
+            return await studentService.UpdateStudentAsync(data);
         }
 
         [HttpDelete, Route("{Id:int}")]

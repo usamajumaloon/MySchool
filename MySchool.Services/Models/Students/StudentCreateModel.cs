@@ -14,6 +14,5 @@ namespace MySchool.Services.Models.Students
         public string Gender { get; set; }
         public DateTimeOffset DateOfBirth { get; set; }
         public int GradeClassId { get; set; }
-        public GradeClass GradeClasses { get; set; }
     }
 }

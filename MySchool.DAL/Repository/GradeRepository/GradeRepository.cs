@@ -17,13 +17,13 @@ namespace MySchool.DAL.Repository.GradeRepository
 
         public async Task<IEnumerable<Grade>> GetAllGrades()
         {
-            return await context.Grades.ToListAsync();
+            return await context.Grades.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         public async Task<Grade> GetGradeById(int Id)
         {
             return await context.Grades
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && !p.IsDeleted)
                 .FirstOrDefaultAsync();
         }
 
@@ -35,23 +35,15 @@ namespace MySchool.DAL.Repository.GradeRepository
 
         public async Task DeleteGrade(int Id)
         {
-            Grade entityToDelete = await GetGradeById(Id);
-            Delete(entityToDelete);
+            var output = await GetGradeById(Id);
+            output.IsDeleted = true;
         }
-
-        public void Delete(Grade entityToDelete)
+        
+        public async Task UpdateGrade(Grade entity)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                context.Attach(entityToDelete);
-            }
-            context.Remove(entityToDelete);
-        }
-
-        public void UpdateGrade(Grade entity)
-        {
-            context.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
+            var result = await GetGradeById(entity.Id);
+            result.Name = entity.Name;
+            //context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Save()

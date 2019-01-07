@@ -13,5 +13,6 @@ namespace MySchool.DAL.Entities
         public DateTimeOffset DateOfBirth { get; set; }
         public int? GradeClassId { get; set; }
         public GradeClass GradeClasses { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

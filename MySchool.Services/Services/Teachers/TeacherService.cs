@@ -30,17 +30,18 @@ namespace MySchool.Services.Services.Teachers
             return entity;
         }
 
-        public async Task AddTeacherAsync(TeacherCreateModel input)
+        public async Task<TeacherCreateModel> AddTeacherAsync(TeacherCreateModel input)
         {
             var entity = input.MapObject<TeacherCreateModel, Teacher>();
             await repository.AddTeacher(entity);
             repository.Save();
+            return input;
         }
 
-        public void UpdateTeacherAsync(TeacherUpdateModel input)
+        public async Task UpdateTeacherAsync(TeacherUpdateModel input)
         {
             var entity = input.MapObject<TeacherUpdateModel, Teacher>();
-            repository.UpdateTeacher(entity);
+            await repository.UpdateTeacher(entity);
             repository.Save();
         }
 

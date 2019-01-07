@@ -10,8 +10,8 @@ namespace MySchool.Services.Services.Subjects
     {
         Task<IEnumerable<SubjectModel>> GetSubjectAsync();
         Task<SubjectModel> GetSubjectByIdAsync(int Id);
-        Task AddSubjectAsync(SubjectCreateModel input);
-        void UpdateSubjectAsync(SubjectUpdateModel input);
+        Task<SubjectCreateModel> AddSubjectAsync(SubjectCreateModel input);
+        Task UpdateSubjectAsync(SubjectUpdateModel input);
         Task DeleteSubjectAsync(int Id);
     }
 }

@@ -5,13 +5,13 @@ using MySchool.DAL.Entities;
 using MySchool.WEB.Common;
 using System;
 
-namespace MySchool.Tests
+namespace MySchool.Tests.Unit_Tests.Teachers
 {
-    public class MySchoolTestBase: IDisposable
+    public class TeacherTestBase
     {
         protected readonly MySchoolDb context;
 
-        public MySchoolTestBase()
+        public TeacherTestBase()
         {
             var options = new DbContextOptionsBuilder<MySchoolDb>()
                               .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -26,7 +26,7 @@ namespace MySchool.Tests
             });
             context.SaveChanges();
         }
-        
+
         public void Dispose()
         {
             context.Database.EnsureDeleted();
@@ -45,12 +45,16 @@ namespace MySchool.Tests
             context.Classes.Add(new Class { Id = 2, Name = "B" });
 
             //GradeClasses
-            context.GradeClasses.Add(new GradeClass { Id = 1, GradeId = 1, ClassId = 2});
+            context.GradeClasses.Add(new GradeClass { Id = 1, GradeId = 1, ClassId = 2 });
+
+            //Subjects
+            context.Subjects.Add(new Subject { Id = 1, Name = "Science" });
+            context.Subjects.Add(new Subject { Id = 2, Name = "Maths" });
 
             //Students
-            context.Students.Add(new Student { Id = 1, FirstName = "Usama", LastName = "Jumaloon", Gender = "Male", DateOfBirth = new DateTime(1995, 11, 25), GradeClassId = 1 });
-            context.Students.Add(new Student { Id = 2, FirstName = "Amjad", LastName = "Hussain", Gender = "Male", DateOfBirth = new DateTime(1995, 06, 23), GradeClassId = 1 });
-            context.Students.Add(new Student { Id = 3, FirstName = "Thanzeel", LastName = "Jalaldeen", Gender = "Male", DateOfBirth = new DateTime(1995, 12, 18), GradeClassId = 1 });
+            context.Teachers.Add(new Teacher { Id = 1, FirstName = "Fazlan", LastName = "Fairooz", Gender = "Male", DateOfBirth = new DateTime(1995, 11, 25), GradeClassId = 1, SubjectId = 1 });
+            context.Teachers.Add(new Teacher { Id = 2, FirstName = "Irfan", LastName = "Faiz", Gender = "Male", DateOfBirth = new DateTime(1995, 06, 23), GradeClassId = 1, SubjectId = 2 });
+            context.Teachers.Add(new Teacher { Id = 3, FirstName = "Thanzeel", LastName = "Jalaldeen", Gender = "Male", DateOfBirth = new DateTime(1995, 12, 18), GradeClassId = 1, SubjectId = 2 });
 
             context.SaveChanges();
         }

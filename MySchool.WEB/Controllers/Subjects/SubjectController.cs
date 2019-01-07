@@ -33,9 +33,9 @@ namespace MySchool.WEB.Controllers.Subjects
         }
 
         [HttpPost]
-        public async Task PostAsync(SubjectCreateModel value)
+        public async Task<SubjectCreateModel> PostAsync(SubjectCreateModel value)
         {
-            await subjectService.AddSubjectAsync(value);
+            return await subjectService.AddSubjectAsync(value);
         }
 
         [HttpPut]

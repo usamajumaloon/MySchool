@@ -11,5 +11,6 @@ namespace MySchool.DAL.Entities
         public int GradeId { get; set; }
         public Subject Subjects { get; set; }
         public Grade Grades { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

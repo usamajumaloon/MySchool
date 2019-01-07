@@ -33,15 +33,15 @@ namespace MySchool.WEB.Controllers.Classes
         }
 
         [HttpPost]
-        public async Task PostAsync(ClassCreateModel value)
+        public async Task<ClassCreateModel> PostAsync(ClassCreateModel value)
         {
-            await classService.AddClassAsync(value);
+            return await classService.AddClassAsync(value);
         }
 
         [HttpPut]
-        public void PutAsync(ClassUpdateModel data)
+        public async Task PutAsync(ClassUpdateModel data)
         {
-            classService.UpdateClassAsync(data);
+            await classService.UpdateClassAsync(data);
         }
 
         [HttpDelete, Route("{Id:int}")]

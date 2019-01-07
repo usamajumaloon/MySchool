@@ -38,11 +38,12 @@ namespace MySchool.Services.Services.Students
             return input;
         }
 
-        public void UpdateStudentAsync(StudentUpdateModel input)
+        public async Task<StudentUpdateModel> UpdateStudentAsync(StudentUpdateModel input)
         {
             var entity = input.MapObject<StudentUpdateModel, Student>();
-            repository.UpdateStudent(entity);
+            await repository.UpdateStudent(entity);
             repository.Save();
+            return input;
         }
 
         public async Task DeleteStudentAsync(int Id)

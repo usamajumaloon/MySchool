@@ -31,17 +31,18 @@ namespace MySchool.Services.Services.Classes
             return entity;
         }
 
-        public async Task AddClassAsync(ClassCreateModel input)
+        public async Task<ClassCreateModel> AddClassAsync(ClassCreateModel input)
         {
             var entity = input.MapObject<ClassCreateModel, Class>();
             await repository.AddClass(entity);
             repository.Save();
+            return input;
         }
 
-        public void UpdateClassAsync(ClassUpdateModel input)
+        public async Task UpdateClassAsync(ClassUpdateModel input)
         {
             var entity = input.MapObject<ClassUpdateModel, Class>();
-            repository.UpdateClass(entity);
+            await repository.UpdateClass(entity);
             repository.Save();
         }
 

@@ -17,13 +17,13 @@ namespace MySchool.DAL.Repository.StudentRepository
 
         public async Task<IEnumerable<Student>> GetAllStudents()
         {
-            return await context.Students.ToListAsync();
+            return await context.Students.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         public async Task<Student> GetStudentById(int Id)
         {
             return await context.Students
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && !p.IsDeleted)
                 .FirstOrDefaultAsync();
         }
 
@@ -35,23 +35,19 @@ namespace MySchool.DAL.Repository.StudentRepository
 
         public async Task DeleteStudent(int Id)
         {
-            Student entityToDelete = await GetStudentById(Id);
-            Delete(entityToDelete);
+            var output = await GetStudentById(Id);
+            output.IsDeleted = true;
         }
 
-        public void Delete(Student entityToDelete)
+        public async Task UpdateStudent(Student entity)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                context.Attach(entityToDelete);
-            }
-            context.Remove(entityToDelete);
-        }
-
-        public void UpdateStudent(Student entity)
-        {
-            context.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
+            var result = await GetStudentById(entity.Id);
+            result.FirstName = entity.FirstName;
+            result.LastName = entity.LastName;
+            result.DateOfBirth = entity.DateOfBirth;
+            result.Gender = entity.Gender;
+            result.GradeClassId = entity.GradeClassId;
+            context.Entry(result).State = EntityState.Modified;
         }
 
         public void Save()

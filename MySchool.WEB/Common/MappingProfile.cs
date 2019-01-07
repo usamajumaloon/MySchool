@@ -13,29 +13,29 @@ namespace MySchool.WEB.Common
         public MappingProfile()
         {
             //Student
-            CreateMap<StudentCreateModel, StudentModel>(); 
-            CreateMap<StudentUpdateModel, StudentModel>();
-            CreateMap<StudentModel, Student>();
+            CreateMap<StudentCreateModel, Student>().ReverseMap();
+            CreateMap<StudentUpdateModel, Student>().ReverseMap();
+            CreateMap<StudentModel, Student>().ReverseMap();
 
             //Teacher
-            CreateMap<TeacherCreateModel, TeacherModel>();
-            CreateMap<TeacherUpdateModel, TeacherModel>();
-            CreateMap<TeacherModel, Teacher>();
+            CreateMap<TeacherCreateModel, Teacher>().ReverseMap();
+            CreateMap<TeacherUpdateModel, Teacher>().ReverseMap();
+            CreateMap<TeacherModel, Teacher>().ReverseMap();
 
             //Class
-            CreateMap<ClassCreateModel, ClassModel>();
-            CreateMap<ClassUpdateModel, ClassModel>();
-            CreateMap<ClassModel, Class>();
+            CreateMap<ClassCreateModel, Class>().ReverseMap();
+            CreateMap<ClassUpdateModel, Class>().ReverseMap();
+            CreateMap<ClassModel, Class>().ReverseMap();
 
             //Grade
-            CreateMap<GradeCreateModel, GradeModel>();
-            CreateMap<GradeUpdateModel, GradeModel>();
-            CreateMap<GradeModel, Grade>();
+            CreateMap<GradeCreateModel, Grade>().ReverseMap();
+            CreateMap<GradeUpdateModel, Grade>().ReverseMap();
+            CreateMap<GradeModel, Grade>().ReverseMap();
 
             //Subject
-            CreateMap<SubjectCreateModel, SubjectModel>();
-            CreateMap<SubjectUpdateModel, SubjectModel>();
-            CreateMap<SubjectModel, Subject>();
+            CreateMap<SubjectCreateModel, Subject>().ReverseMap();
+            CreateMap<SubjectUpdateModel, Subject>().ReverseMap();
+            CreateMap<SubjectModel, Subject>().ReverseMap();
         }
     }
 }
