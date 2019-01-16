@@ -1,35 +1,49 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { FetchDataService } from './fetch-data/fetch-data.service';
+import { AppRoutes } from './app.routing';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { FooterModule } from './shared/footer/footer.module';
+import { NavbarModule} from './shared/navbar/navbar.module';
+import { FixedPluginModule} from './shared/fixedplugin/fixedplugin.module';
+import { NguiMapModule} from '@ngui/map';
+
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { UserComponent }   from './user/user.component';
+import { TableComponent }   from './table/table.component';
+import { TypographyComponent }   from './typography/typography.component';
+import { IconsComponent }   from './icons/icons.component';
+import { MapsComponent }   from './maps/maps.component';
+import { NotificationsComponent }   from './notifications/notifications.component';
+import { UpgradeComponent }   from './upgrade/upgrade.component';
+import { TableService } from './table/table.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    DashboardComponent,
+    UserComponent,
+    TableComponent,
+    TypographyComponent,
+    IconsComponent,
+    MapsComponent,
+    NotificationsComponent,
+    UpgradeComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    BrowserModule,
+    RouterModule.forRoot(AppRoutes),
+    SidebarModule,
+    NavbarModule,
+    FooterModule,
+    FixedPluginModule,
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'}),
+    HttpClientModule
   ],
-  providers: [FetchDataService],
+  providers: [TableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
